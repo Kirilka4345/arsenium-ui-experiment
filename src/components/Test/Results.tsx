@@ -6,9 +6,10 @@ interface ResultsProps {
   score: number;
   totalQuestions: number;
   onRestart: () => void;
+  customMessage?: string; // Added customMessage as an optional prop
 }
 
-const Results = ({ score, totalQuestions, onRestart }: ResultsProps) => {
+const Results = ({ score, totalQuestions, onRestart, customMessage }: ResultsProps) => {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -92,10 +93,21 @@ const Results = ({ score, totalQuestions, onRestart }: ResultsProps) => {
         {resultDescription}
       </motion.p>
       
+      {customMessage && (
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="p-4 bg-primary/10 rounded-lg border border-primary/20 mb-6 text-muted-foreground"
+        >
+          {customMessage}
+        </motion.p>
+      )}
+      
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
         className="p-6 bg-muted rounded-lg mb-8"
       >
         <p className="font-medium">Ваш результат: {score} правильных ответов из {totalQuestions}</p>
@@ -104,7 +116,7 @@ const Results = ({ score, totalQuestions, onRestart }: ResultsProps) => {
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onRestart}
