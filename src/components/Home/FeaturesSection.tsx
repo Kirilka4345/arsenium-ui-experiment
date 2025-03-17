@@ -1,6 +1,6 @@
 
 import { motion } from 'framer-motion';
-import { Play, GameController, MessageSquare, BookOpen } from 'lucide-react';
+import { Play, Gamepad, MessageSquare, BookOpen } from 'lucide-react';
 
 const features = [
   {
@@ -14,7 +14,7 @@ const features = [
     description: 'Пройдите тест с интерактивными вопросами и получите результат.',
   },
   {
-    icon: <GameController className="h-10 w-10 text-accent" />,
+    icon: <Gamepad className="h-10 w-10 text-accent" />,
     title: 'Мини-игра',
     description: 'Попробуйте нашу мини-игру с пиксельным героем и препятствиями.',
   },
