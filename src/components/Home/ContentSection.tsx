@@ -2,16 +2,44 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Cpu, Code } from 'lucide-react';
 
 interface ContentSectionProps {
   imageUrl: string;
   gifUrl: string;
   isReversed?: boolean;
+  title: string;
+  subtitle: string;
+  description: string;
+  linkText: string;
+  linkUrl: string;
+  icon: 'cpu' | 'code';
 }
 
-const ContentSection = ({ imageUrl, gifUrl, isReversed = false }: ContentSectionProps) => {
+const ContentSection = ({ 
+  imageUrl, 
+  gifUrl, 
+  isReversed = false, 
+  title,
+  subtitle,
+  description,
+  linkText,
+  linkUrl,
+  icon
+}: ContentSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  const getIcon = () => {
+    switch (icon) {
+      case 'cpu':
+        return <Cpu className="text-primary" />;
+      case 'code':
+        return <Code className="text-secondary" />;
+      default:
+        return <Cpu className="text-primary" />;
+    }
+  };
 
   return (
     <section ref={ref} className="section">
@@ -27,27 +55,24 @@ const ContentSection = ({ imageUrl, gifUrl, isReversed = false }: ContentSection
               initial={{ scale: 0.9, opacity: 0 }}
               animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-block px-3 py-1 text-sm font-medium bg-primary/10 rounded-full text-primary"
+              className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium bg-primary/10 rounded-full text-primary"
             >
-              Познакомьтесь с нашим проектом
+              {getIcon()}
+              {subtitle}
             </motion.div>
-            <h2>Интересный и полезный контент</h2>
+            <h2 className="hero-gradient">{title}</h2>
             <p className="text-muted-foreground leading-relaxed">
-              На нашем сайте вы найдете множество интересных статей, игр и тестов, которые помогут вам лучше понять окружающий мир.
-              Мы стремимся предоставить уникальный и познавательный контент, чтобы сделать ваше время на сайте приятным и полезным.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Исследуйте нашу коллекцию, участвуйте в тестировании, играйте в мини-игру или общайтесь с чат-ботом. 
-              Всё это доступно в одном месте!
+              {description}
             </p>
             <div>
               <motion.a
-                href="/article"
+                href={linkUrl}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn-primary mr-4"
+                className="btn-primary inline-flex items-center"
               >
-                Читать статью
+                {getIcon()}
+                <span className="ml-2">{linkText}</span>
               </motion.a>
             </div>
           </motion.div>
@@ -58,7 +83,7 @@ const ContentSection = ({ imageUrl, gifUrl, isReversed = false }: ContentSection
             transition={{ duration: 0.7, delay: 0.4 }}
             className="relative"
           >
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <div className="rounded-2xl overflow-hidden shadow-2xl arseny-border-glow">
               <img 
                 src={imageUrl || "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"} 
                 alt="Content image" 

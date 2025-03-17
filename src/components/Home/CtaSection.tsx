@@ -1,10 +1,11 @@
 
 import { motion } from 'framer-motion';
 import { Cpu, Gamepad, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CtaSection = () => {
   return (
-    <section className="section bg-gradient-to-r from-primary to-secondary text-white overflow-hidden relative">
+    <section className="section bg-gradient-to-r from-primary/40 via-accent/40 to-secondary/40 overflow-hidden relative">
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -36,7 +37,7 @@ const CtaSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-white"
+            className="text-white hero-gradient"
           >
             Готовы узнать больше об Арсении?
           </motion.h2>
@@ -48,7 +49,7 @@ const CtaSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-white/80"
           >
-            Пройдите тест, сыграйте в игру или пообщайтесь с нашим чат-ботом Арсением!
+            Пройдите тест на совместимость, помогите собрать идеальный компьютер или пообщайтесь с цифровой версией Арсения!
           </motion.p>
           
           <motion.div
@@ -58,33 +59,36 @@ const CtaSection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row justify-center gap-4 mt-8"
           >
-            <motion.a
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-              href="/test"
-              className="flex items-center justify-center gap-2 bg-white text-primary px-8 py-3 rounded-md font-medium shadow-lg transition-all duration-300"
-            >
-              <Cpu className="animate-pulse" />
-              Пройти тест
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-              href="/game"
-              className="flex items-center justify-center gap-2 bg-white/20 text-white border border-white/50 backdrop-blur-sm px-8 py-3 rounded-md font-medium shadow-lg hover:bg-white/30 transition-all duration-300"
-            >
-              <Gamepad className="animate-bounce" />
-              Играть в игру
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-              href="/chat"
-              className="flex items-center justify-center gap-2 bg-white/10 text-white border border-white/30 backdrop-blur-sm px-8 py-3 rounded-md font-medium shadow-lg hover:bg-white/20 transition-all duration-300"
-            >
-              <MessageSquare className="animate-spin" style={{ animationDuration: '3s' }} />
-              Чат с ботом
-            </motion.a>
+            <Link to="/test">
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center gap-2 bg-white text-primary px-8 py-3 rounded-md font-medium shadow-lg transition-all duration-300"
+              >
+                <Cpu className="animate-pulse" />
+                Тест на совместимость
+              </motion.div>
+            </Link>
+            <Link to="/game">
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center gap-2 bg-white/20 text-white border border-white/50 backdrop-blur-sm px-8 py-3 rounded-md font-medium shadow-lg hover:bg-white/30 transition-all duration-300"
+              >
+                <Gamepad className="animate-bounce" />
+                Собрать компьютер мечты
+              </motion.div>
+            </Link>
+            <Link to="/chat">
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center gap-2 bg-white/10 text-white border border-white/30 backdrop-blur-sm px-8 py-3 rounded-md font-medium shadow-lg hover:bg-white/20 transition-all duration-300"
+              >
+                <MessageSquare className="animate-spin" style={{ animationDuration: '3s' }} />
+                Чат с Арсением
+              </motion.div>
+            </Link>
           </motion.div>
         </div>
       </div>

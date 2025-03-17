@@ -1,48 +1,48 @@
 
 import { motion } from 'framer-motion';
-import { Play, Gamepad, MessageSquare, BookOpen, Cpu, Code, Rocket, Pizza } from 'lucide-react';
+import { Cpu, Gamepad, MessageSquare, BookOpen, Code, Rocket, Pizza, Headphones } from 'lucide-react';
 
 const features = [
   {
-    icon: <BookOpen className="h-10 w-10 text-primary" />,
-    title: 'Статья про Арсения',
-    description: 'Узнайте больше о нашем друге Арсении и его увлечениях.',
+    icon: <Cpu className="h-10 w-10 text-primary" />,
+    title: 'Мечта о Xeon',
+    description: 'Изучите страсть Арсения к процессорам Xeon и его мечту о суперкомпьютере.',
   },
   {
-    icon: <Play className="h-10 w-10 text-secondary" />,
-    title: 'Тест на Арсения',
-    description: 'Насколько вы похожи на Арсения? Пройдите наш шутливый тест!',
+    icon: <Code className="h-10 w-10 text-secondary" />,
+    title: 'Код Арсения',
+    description: 'Узнайте об уникальном стиле программирования и творческом подходе к задачам.',
   },
   {
     icon: <Gamepad className="h-10 w-10 text-accent" />,
-    title: 'Мини-игра',
-    description: 'Веселая мини-игра с персонажем, похожим на Арсения.',
+    title: 'Игровые увлечения',
+    description: 'Познакомьтесь с игровыми предпочтениями и любимыми жанрами Арсения.',
   },
   {
-    icon: <MessageSquare className="h-10 w-10 text-primary" />,
-    title: 'Чат-бот Арсений',
-    description: 'Общайтесь с нашим шутливым чат-ботом от имени Арсения.',
+    icon: <Pizza className="h-10 w-10 text-primary" />,
+    title: 'Кулинарные пристрастия',
+    description: 'Откройте для себя особенные вкусы и предпочтения в еде нашего героя.',
   },
   {
-    icon: <Cpu className="h-10 w-10 text-secondary" />,
-    title: 'Суперкомпьютер Арсения',
-    description: 'Узнайте о мечте Арсения - суперсборке на процессоре Xeon!',
+    icon: <MessageSquare className="h-10 w-10 text-secondary" />,
+    title: 'Общение с Арсением',
+    description: 'Пообщайтесь с чат-ботом, имитирующим манеру общения Арсения.',
   },
   {
-    icon: <Code className="h-10 w-10 text-accent" />,
-    title: 'Код Арсения',
-    description: 'Посмотрите на "особенный" стиль программирования нашего друга.',
+    icon: <BookOpen className="h-10 w-10 text-accent" />,
+    title: 'Биография',
+    description: 'Прочитайте увлекательную статью о жизни, интересах и достижениях.',
   },
   {
     icon: <Rocket className="h-10 w-10 text-primary" />,
-    title: 'Мечты Арсения',
-    description: 'Куда хочет полететь наш друг и о чем он мечтает?',
+    title: 'Амбиции',
+    description: 'Узнайте о технологических амбициях и планах на будущее.',
   },
   {
-    icon: <Pizza className="h-10 w-10 text-secondary" />,
-    title: 'Вкусы Арсения',
-    description: 'Любимая еда, напитки и другие предпочтения нашего друга.',
-  },
+    icon: <Headphones className="h-10 w-10 text-secondary" />,
+    title: 'Музыкальные вкусы',
+    description: 'Исследуйте музыкальные предпочтения и любимые композиции Арсения.',
+  }
 ];
 
 const FeaturesSection = () => {
@@ -66,7 +66,7 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section id="features" className="section bg-muted/50">
+    <section id="features" className="section bg-muted/10">
       <div className="container-custom">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +77,7 @@ const FeaturesSection = () => {
         >
           <h2 className="mb-4 hero-gradient text-4xl font-bold">Мир Арсения</h2>
           <p className="text-muted-foreground text-lg">
-            Исследуйте разнообразные особенности и увлечения нашего друга Арсения
+            Исследуйте разнообразные увлечения, технические пристрастия и уникальные особенности нашего друга
           </p>
         </motion.div>
 
@@ -92,8 +92,8 @@ const FeaturesSection = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)" }}
-              className="card-hover rounded-xl bg-card p-8 text-center border border-border/50 backdrop-blur-sm"
+              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
+              className="neo-card text-center p-8"
             >
               <motion.div 
                 className="flex justify-center mb-6"

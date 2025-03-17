@@ -1,7 +1,7 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -12,10 +12,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(79, 70, 229, 0.8));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(97, 218, 251, 0.8));
 }
 
 @keyframes logo-spin {
@@ -33,10 +33,19 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+}
+
+/* Dark Theme Neon Glow Effects */
+.neon-text {
+  text-shadow: 0 0 5px rgba(79, 70, 229, 0.5), 
+               0 0 10px rgba(79, 70, 229, 0.3), 
+               0 0 15px rgba(79, 70, 229, 0.2);
+}
+
+.neon-border {
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.5), 
+              0 0 10px rgba(79, 70, 229, 0.3), 
+              0 0 15px rgba(79, 70, 229, 0.2);
 }

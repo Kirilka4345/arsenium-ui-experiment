@@ -1,6 +1,6 @@
 
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Cpu } from 'lucide-react';
 
 interface HeroSectionProps {
   videoUrl: string;
@@ -28,7 +28,7 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
           <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
+        <div className="absolute inset-0 bg-black/70 z-10"></div>
       </div>
 
       <div className="relative z-20 h-full flex flex-col items-center justify-center text-white container-custom">
@@ -44,8 +44,9 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
             transition={{ duration: 0.5 }}
             className="mb-4"
           >
-            <span className="inline-block px-3 py-1 text-sm font-medium bg-primary/20 backdrop-blur-sm rounded-full">
-              Добро пожаловать на наш сайт
+            <span className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium bg-primary/20 backdrop-blur-sm rounded-full">
+              <Cpu className="h-4 w-4 animate-pulse" />
+              Погрузитесь в мир Арсения
             </span>
           </motion.div>
           
@@ -55,7 +56,7 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="hero-gradient text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mx-auto text-balance"
           >
-            Современный интерактивный проект
+            Мир технологий глазами Арсения
           </motion.h1>
           
           <motion.p
@@ -64,7 +65,7 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto"
           >
-            Исследуйте интерактивные функции, игры и тесты на нашем сайте
+            Исследуйте увлечения, технические пристрастия и уникальный стиль кодирования нашего друга
           </motion.p>
           
           <motion.div
@@ -77,9 +78,10 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
               href="#features"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary"
+              className="btn-primary flex items-center justify-center gap-2"
             >
-              Узнать больше
+              <Cpu className="h-5 w-5" />
+              Открыть мир Арсения
             </motion.a>
             <motion.a
               href="/test"
@@ -87,7 +89,7 @@ const HeroSection = ({ videoUrl }: HeroSectionProps) => {
               whileTap={{ scale: 0.95 }}
               className="btn-secondary"
             >
-              Пройти тест
+              Пройти тест на совместимость
             </motion.a>
           </motion.div>
         </motion.div>
