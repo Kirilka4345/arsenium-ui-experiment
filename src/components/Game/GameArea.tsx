@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Memory, HardDrive, Fan, Maximize2, Trophy } from 'lucide-react';
+import { Cpu, MemoryStick, HardDrive, Fan, Maximize2, Trophy } from 'lucide-react';
 
 interface GameObject {
   id: number;
@@ -57,7 +56,6 @@ const GameArea = () => {
   const levelUpIntervalRef = useRef<NodeJS.Timeout>();
   const [gameSpeed, setGameSpeed] = useState(5);
   
-  // Initialize the game
   const startGame = () => {
     setIsPlaying(true);
     setGameOver(false);
@@ -78,7 +76,6 @@ const GameArea = () => {
       isOnGround: true
     });
     setGameObjects([
-      // Initial ground platform
       {
         id: Date.now(),
         type: 'platform',
@@ -88,38 +85,33 @@ const GameArea = () => {
       }
     ]);
     
-    // Generate obstacles and coins at intervals
     objectGenIntervalRef.current = setInterval(() => {
       generateGameObjects();
     }, 2000);
     
-    // Increment distance
     distanceIntervalRef.current = setInterval(() => {
-      setDistance(prev => prev + 1);
-      // Every 100 distance, add to score
-      if ((prev + 1) % 100 === 0) {
-        setScore(score => score + 10);
-      }
+      setDistance(prevDistance => {
+        if ((prevDistance + 1) % 100 === 0) {
+          setScore(score => score + 10);
+        }
+        return prevDistance + 1;
+      });
     }, 100);
     
-    // Level up every 30 seconds
     levelUpIntervalRef.current = setInterval(() => {
       setLevel(prev => {
         const newLevel = prev + 1;
-        setGameSpeed(5 + newLevel); // Increase game speed with level
+        setGameSpeed(5 + newLevel);
         return newLevel;
       });
     }, 30000);
     
-    // Start game loop
     startGameLoop();
   };
   
-  // Generate new game objects (obstacles, coins, platforms)
   const generateGameObjects = () => {
     const newObjects: GameObject[] = [];
     
-    // Generate platform
     const platformWidth = Math.floor(Math.random() * 300) + 100;
     const platformGap = Math.floor(Math.random() * 200) + 100;
     const platformY = Math.random() > 0.5 ? GAME_HEIGHT - 20 : GAME_HEIGHT - 120;
@@ -132,7 +124,6 @@ const GameArea = () => {
       height: 20
     });
     
-    // 70% chance to generate a coin on this platform
     if (Math.random() < 0.7) {
       const coinType = COIN_TYPES[Math.floor(Math.random() * COIN_TYPES.length)] as 'cpu' | 'ram' | 'ssd' | 'cooler';
       newObjects.push({
@@ -149,7 +140,6 @@ const GameArea = () => {
       });
     }
     
-    // 50% chance to generate an obstacle
     if (Math.random() < 0.5) {
       const obstacleHeight = Math.floor(Math.random() * 30) + 30;
       newObjects.push({
@@ -167,7 +157,6 @@ const GameArea = () => {
     setGameObjects(prev => [...prev, ...newObjects]);
   };
   
-  // Game loop
   const startGameLoop = () => {
     const gameLoop = () => {
       updateGameState();
@@ -176,26 +165,20 @@ const GameArea = () => {
     gameLoopRef.current = requestAnimationFrame(gameLoop);
   };
   
-  // Update the game state
   const updateGameState = () => {
     if (!isPlaying || gameOver) return;
     
-    // Update character position
     setCharacter(prev => {
-      // Apply gravity
       let newVelocityY = prev.isOnGround ? 0 : prev.velocity.y + GRAVITY;
       
-      // Check if character is on a platform
       let isOnPlatform = false;
       let newPosition = {
         x: prev.position.x,
         y: prev.position.y + newVelocityY
       };
       
-      // Check collision with platforms
       for (const obj of gameObjects) {
         if (obj.type === 'platform') {
-          // Character is above platform and falling
           if (
             newPosition.y + 60 >= obj.position.y &&
             prev.position.y + 60 <= obj.position.y &&
@@ -211,10 +194,8 @@ const GameArea = () => {
         }
       }
       
-      // Check if character is still on ground or platform
       const isOnGround = isOnPlatform || newPosition.y >= GAME_HEIGHT - 80;
       
-      // Ensure character doesn't fall through the ground
       if (newPosition.y > GAME_HEIGHT - 80) {
         newPosition.y = GAME_HEIGHT - 80;
         newVelocityY = 0;
@@ -229,26 +210,23 @@ const GameArea = () => {
       };
     });
     
-    // Update game objects positions
     setGameObjects(prev => {
       const updatedObjects = prev
         .map(obj => ({
           ...obj,
           position: {
             ...obj.position,
-            x: obj.position.x - gameSpeed // Move objects to the left
+            x: obj.position.x - gameSpeed
           }
         }))
-        .filter(obj => obj.position.x + obj.width > -100); // Remove objects that have gone off screen
+        .filter(obj => obj.position.x + obj.width > -100);
       
       return updatedObjects;
     });
     
-    // Check for collisions with coins and obstacles
     checkCollisions();
   };
   
-  // Check for collisions with game objects
   const checkCollisions = () => {
     setGameObjects(prev => {
       const updatedObjects = [...prev];
@@ -259,7 +237,6 @@ const GameArea = () => {
         height: 60
       };
       
-      // Check each object for collision
       for (let i = updatedObjects.length - 1; i >= 0; i--) {
         const obj = updatedObjects[i];
         const objRect = {
@@ -269,19 +246,15 @@ const GameArea = () => {
           height: obj.height
         };
         
-        // Check if collision occurred
         if (
           characterRect.x < objRect.x + objRect.width &&
           characterRect.x + characterRect.width > objRect.x &&
           characterRect.y < objRect.y + objRect.height &&
           characterRect.y + characterRect.height > objRect.y
         ) {
-          // Collision with coin
           if (obj.type === 'coin') {
-            // Update score
             setScore(prev => prev + (obj.value || 5));
             
-            // Update collected items
             if (obj.coinType) {
               setCollectedItems(prev => ({
                 ...prev,
@@ -289,12 +262,8 @@ const GameArea = () => {
               }));
             }
             
-            // Remove the coin
             updatedObjects.splice(i, 1);
-          }
-          
-          // Collision with obstacle
-          else if (obj.type === 'obstacle') {
+          } else if (obj.type === 'obstacle') {
             endGame();
           }
         }
@@ -304,7 +273,6 @@ const GameArea = () => {
     });
   };
   
-  // Handle jump
   const jump = () => {
     if (character.isOnGround && isPlaying && !gameOver) {
       setCharacter(prev => ({
@@ -316,7 +284,6 @@ const GameArea = () => {
     }
   };
   
-  // End game and clean up
   const endGame = () => {
     setIsPlaying(false);
     setGameOver(true);
@@ -326,7 +293,6 @@ const GameArea = () => {
       localStorage.setItem('highScore', score.toString());
     }
     
-    // Clean up all intervals and animation frames
     if (objectGenIntervalRef.current) {
       clearInterval(objectGenIntervalRef.current);
     }
@@ -344,7 +310,6 @@ const GameArea = () => {
     }
   };
   
-  // Handle keyboard events
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.code === 'Space' || e.key === 'ArrowUp') && isPlaying) {
@@ -358,7 +323,6 @@ const GameArea = () => {
     };
   }, [character.isOnGround, isPlaying, gameOver]);
   
-  // Clean up on unmount
   useEffect(() => {
     return () => {
       if (objectGenIntervalRef.current) {
@@ -379,13 +343,12 @@ const GameArea = () => {
     };
   }, []);
   
-  // Get coin icon based on type
   const getCoinIcon = (type: string) => {
     switch (type) {
       case 'cpu':
         return <Cpu className="text-yellow-400" />;
       case 'ram':
-        return <Memory className="text-blue-400" />;
+        return <MemoryStick className="text-blue-400" />;
       case 'ssd':
         return <HardDrive className="text-green-400" />;
       case 'cooler':
@@ -417,7 +380,7 @@ const GameArea = () => {
           <div className="text-sm">CPU: {collectedItems.cpu}</div>
         </div>
         <div className="arseny-card flex flex-col items-center p-2">
-          <Memory className="text-secondary mb-1" />
+          <MemoryStick className="text-secondary mb-1" />
           <div className="text-sm">RAM: {collectedItems.ram}</div>
         </div>
         <div className="arseny-card flex flex-col items-center p-2">
@@ -440,7 +403,6 @@ const GameArea = () => {
         className="relative w-full h-[400px] bg-muted/30 rounded-lg border border-primary/20 overflow-hidden cursor-pointer shadow-inner"
         style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}
       >
-        {/* Character */}
         <motion.div
           className="game-character absolute"
           style={{
@@ -449,7 +411,6 @@ const GameArea = () => {
             transition: 'none'
           }}
         >
-          {/* Character face and body */}
           <div className="w-full h-full relative flex flex-col items-center justify-center">
             <div className="absolute top-2 left-2 w-3 h-3 bg-white rounded-full"></div>
             <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full"></div>
@@ -458,7 +419,6 @@ const GameArea = () => {
           </div>
         </motion.div>
         
-        {/* Game Objects (Platforms, Obstacles, Coins) */}
         <AnimatePresence>
           {gameObjects.map((obj) => {
             if (obj.type === 'platform') {
@@ -514,7 +474,6 @@ const GameArea = () => {
           })}
         </AnimatePresence>
         
-        {/* Game overlay */}
         {!isPlaying && (
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center">
             {gameOver ? (
@@ -532,7 +491,7 @@ const GameArea = () => {
                     <div>CPU: {collectedItems.cpu}</div>
                   </div>
                   <div className="flex flex-col items-center p-2 bg-muted/50 rounded-lg">
-                    <Memory className="text-secondary mb-1" />
+                    <MemoryStick className="text-secondary mb-1" />
                     <div>RAM: {collectedItems.ram}</div>
                   </div>
                   <div className="flex flex-col items-center p-2 bg-muted/50 rounded-lg">
@@ -587,7 +546,7 @@ const GameArea = () => {
                     <div>Процессор Xeon</div>
                   </div>
                   <div className="flex items-center p-2 bg-muted/50 rounded-lg">
-                    <Memory className="text-secondary mr-2" />
+                    <MemoryStick className="text-secondary mr-2" />
                     <div>Оперативная память</div>
                   </div>
                   <div className="flex items-center p-2 bg-muted/50 rounded-lg">
