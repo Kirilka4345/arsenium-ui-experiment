@@ -5,8 +5,8 @@ A technology-themed frontend prototype built with React, TypeScript, Vite, shadc
 ## Run locally
 
 ```sh
-git clone https://github.com/Kirilka4345/colorful-arsenium-adventure-69.git
-cd colorful-arsenium-adventure-69
+git clone https://github.com/Kirilka4345/arsenium-ui-experiment.git
+cd arsenium-ui-experiment
 npm ci
 npm run dev
 ```
